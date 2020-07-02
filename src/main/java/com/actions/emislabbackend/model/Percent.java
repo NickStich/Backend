@@ -24,7 +24,7 @@ public class Percent {
     }
 
     public double getAmount() {
-        return Double.parseDouble(decimalFormat.format(amount));
+        return Math.round(Double.parseDouble(decimalFormat.format(amount)));
     }
 
     public void setAmount(double amount) {
