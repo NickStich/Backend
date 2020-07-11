@@ -30,4 +30,8 @@ public enum WorkType {
     WorkType(int price) {
         this.price = price;
     }
+
+    public String getName(WorkType workType){
+        return workType.name();
+    }
 }

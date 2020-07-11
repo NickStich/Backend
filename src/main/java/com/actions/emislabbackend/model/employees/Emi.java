@@ -39,7 +39,6 @@ public class Emi implements IEmployee {
         emiList.add(new Percent(WorkType.ALLON_46, WorkType.ALLON_46.getPrice()));
         emiList.add(new Percent(WorkType.DCR_EMAX, WorkType.DCR_EMAX.getPrice()));
         emiList.add(new Percent(WorkType.GUTIERE, WorkType.GUTIERE.getPrice()));
-
         return emiList;
     }
 }
