@@ -1,6 +1,7 @@
 package com.actions.emislabbackend.controller;
 
 
+import com.actions.emislabbackend.dto.OperationTeethDTO;
 import com.actions.emislabbackend.model.OperationTeeth;
 import com.actions.emislabbackend.service.OpTeethService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +23,24 @@ public class OpTeethController {
         return opTeethService.getJobsById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addJobs(@RequestBody OperationTeeth operationTeeth) {
-        opTeethService.addJobs(operationTeeth);
+    @RequestMapping(value = "/operations",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addJobs(@RequestBody OperationTeethDTO operationTeethDTO) {
+        opTeethService.addJobs(operationTeethDTO);
     }
 
-    @RequestMapping(method = RequestMethod.GET) // sau @GetMapping
+    @RequestMapping(value = "/operations",method = RequestMethod.GET)
     public List<OperationTeeth> getAllJobs() {
+//        opTeethService.doHack();
         return opTeethService.getAllJobs();
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public OperationTeeth updateJobs(@RequestBody OperationTeeth operationTeeth) {
-        return opTeethService.updateJobs(operationTeeth);
+    public OperationTeeth updateJobs(@RequestBody OperationTeethDTO operationTeethDTO) {
+        return opTeethService.updateJobs(operationTeethDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteJobsById(@PathVariable("id") int id) {
         opTeethService.deleteJobs(id);
     }
-
-
 }

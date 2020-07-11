@@ -1,10 +1,19 @@
 package com.actions.emislabbackend.service;
 
+import com.actions.emislabbackend.dto.OperationTeethDTO;
 import com.actions.emislabbackend.model.OperationTeeth;
+import com.actions.emislabbackend.model.WorkType;
+import com.actions.emislabbackend.model.employees.Emi;
+import com.actions.emislabbackend.model.employees.EmployeeStrategy;
+import com.actions.emislabbackend.model.employees.Paula;
+import com.actions.emislabbackend.model.employees.Timeea;
 import com.actions.emislabbackend.repository.OpTeethRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,21 +26,42 @@ public class OpTeethService {
         return opTeethRepository.findById(id).orElse(new OperationTeeth());
     }
 
-    public void addJobs(OperationTeeth operationTeeth) {
-        opTeethRepository.save(operationTeeth);
+
+    public OperationTeeth updateJobs(OperationTeethDTO operationTeethDTO) {
+        OperationTeeth operationTeeth = calculate(operationTeethDTO);
+        return opTeethRepository.save(operationTeeth);
     }
 
     public List<OperationTeeth> getAllJobs() {
         return (List<OperationTeeth>) opTeethRepository.findAll();
     }
 
-    public OperationTeeth updateJobs(OperationTeeth operationTeeth) {
+    public OperationTeeth calculate(OperationTeethDTO operationTeethDTO) {
+        OperationTeeth operationTeeth = new OperationTeeth();
+
+        operationTeeth.setMedic(operationTeethDTO.getMedic());
+        operationTeeth.setPatient(operationTeethDTO.getPatient());
+        operationTeeth.setWorktype(operationTeethDTO.getWorktype());
+        operationTeeth.setTeethNumber(operationTeethDTO.getTeethNumber());
+        operationTeeth.setStartDate(operationTeethDTO.getStartDate());
+        operationTeeth.setDueDate(operationTeethDTO.getDueDate());
+        operationTeeth.setEmi(operationTeethDTO.getTeethNumber() * EmployeeStrategy.distributeToEmployees(new Emi(), operationTeethDTO.getWorktype()));
+        operationTeeth.setTimeea(operationTeethDTO.getTeethNumber() * EmployeeStrategy.distributeToEmployees(new Timeea(), operationTeethDTO.getWorktype()));
+        operationTeeth.setPaula(operationTeethDTO.getTeethNumber() * EmployeeStrategy.distributeToEmployees(new Paula(), operationTeethDTO.getWorktype()));
+        operationTeeth.setElementPrice(operationTeethDTO.getWorktype().getPrice());
+        operationTeeth.setTotalPrice(operationTeethDTO.getTeethNumber() * operationTeethDTO.getWorktype().getPrice());
+        operationTeeth.setWorkTypeName(operationTeethDTO.getWorktype().getName(operationTeethDTO.getWorktype()));
+
+        return operationTeeth;
+    }
+
+    public OperationTeeth addJobs(OperationTeethDTO operationTeethDTO) {
+        OperationTeeth operationTeeth = calculate(operationTeethDTO);
         return opTeethRepository.save(operationTeeth);
     }
+
     public void deleteJobs(int id) {
         opTeethRepository.deleteById(id);
     }
-
-
 }
 
