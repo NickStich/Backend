@@ -1,12 +1,9 @@
 package com.actions.emislabbackend.model;
 
 
-import com.actions.emislabbackend.model.employees.Emi;
-import com.actions.emislabbackend.model.employees.EmployeeStrategy;
-import com.actions.emislabbackend.model.employees.Paula;
-import com.actions.emislabbackend.model.employees.Timeea;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,8 +23,10 @@ public class OperationTeeth {
     private String patient;
     @Column
     private WorkType worktype;
-    @Column(name = "teeth_nr")
+    @Column
     private int teethNumber;
+
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column
     private Date startDate;
     @Column
@@ -43,6 +42,6 @@ public class OperationTeeth {
     @Column
     private int totalPrice;
     @Column
-    private String workTypeName;
+    private String status;
 }
 
