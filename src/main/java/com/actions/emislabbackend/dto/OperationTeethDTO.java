@@ -19,6 +19,8 @@ public class OperationTeethDTO {
 
     private Date dueDate;
 
+    private String status;
+
 
 
 }
