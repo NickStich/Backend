@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -55,13 +56,15 @@ public class OpTeethController {
                                                 @RequestParam("patient")  String patient,
                                                 @RequestParam("worktype") String worktype,
                                                 @RequestParam("teethNumber") int teethNumber,
-                                                 @RequestParam("startDate") @DateTimeFormat(pattern="dd-MM-yyyy") Date startDate,
-                                                @RequestParam("status") String status){
+                                                @RequestParam("startDate")  long startDate,
+                                                @RequestParam("dueDate")  long dueDate,
+                                                @RequestParam("status") String status) {
 
       return opTeethService.findByParams(medic,patient,
               worktype,
               teethNumber,
               startDate,
+              dueDate,
               status);
     }
 }

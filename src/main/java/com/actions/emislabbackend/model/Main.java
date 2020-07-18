@@ -8,6 +8,9 @@ public class Main {
     public static void main(String[] args) {
 
         blabla("EMAX");
+        Date date = new Date();
+date.getTime();
+
 
 
     }
@@ -22,4 +25,6 @@ public class Main {
      System.out.println(wt.getName()+ " "+wt.getPrice());
 
  }
+
+
 }

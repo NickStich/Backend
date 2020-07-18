@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -69,8 +70,18 @@ public class OpTeethService {
         opTeethRepository.deleteById(id);
     }
 
-    public List<OperationTeeth> findByParams(String medic, String patient, String worktype, int teethNumber,Date startDate, String status) {
-        return operationTeethRepoCustom.findByMedicAndPatientAndWorkTypeAndNumberAndStartAndDueDate(medic, patient, worktype, teethNumber,startDate, null, status);
+    private Date toDate(long timeInMillis) {
+        Date date = new Date();
+        date.setTime(timeInMillis);
+        if (timeInMillis==0) {
+            return null;
+        }
+        return date;
+    }
+
+    public List<OperationTeeth> findByParams(String medic, String patient, String worktype, int teethNumber,long startDate,long dueDate, String status) {
+        return operationTeethRepoCustom.findByMedicAndPatientAndWorkTypeAndNumberAndStartAndDueDate(
+                medic, patient, worktype, teethNumber, toDate(startDate), toDate(dueDate), status);
     }
 }
 

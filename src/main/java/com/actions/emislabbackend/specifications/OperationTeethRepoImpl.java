@@ -26,9 +26,9 @@ public class OperationTeethRepoImpl implements OperationTeethRepoCustom {
         return WorkType.valueOf(workType);
     }
 
-    public Date toDate(String startDate){
-        return new Date(Long.parseLong(startDate));
-    }
+
+
+
 
     @Override
     public List<OperationTeeth> findByMedicAndPatientAndWorkTypeAndNumberAndStartAndDueDate(String medic, String patient, String workType, int teethNumber, Date startDate, Date dueDate, String status) {
@@ -37,13 +37,13 @@ public class OperationTeethRepoImpl implements OperationTeethRepoCustom {
         Root<OperationTeeth> operation = cq.from(OperationTeeth.class);
         List<Predicate> predicates = new ArrayList<>();
 
-        if (medic != null) {
+        if (medic != null && !medic.isEmpty()) {
             predicates.add(cb.like(operation.get("medic"), "%" + medic + "%"));
         }
-        if (patient != null) {
+        if (patient != null && !patient.isEmpty()) {
             predicates.add(cb.like(operation.get("patient"), "%" + patient + "%"));
         }
-        if (workType != null) {
+        if (workType != null && !workType.isEmpty()) {
             List<WorkType> workTypeList = WorkType.getWorkTypeList();
             for (WorkType type : workTypeList) {
                 if (type.getName().equals(workType)) {
@@ -55,14 +55,17 @@ public class OperationTeethRepoImpl implements OperationTeethRepoCustom {
             predicates.add(cb.equal(operation.get("teethNumber"), teethNumber));
         }
 
-        if (startDate != null) {
+        if (startDate != null ) {
             predicates.add(cb.equal(operation.get("startDate") ,  startDate ));
         }
 
-        if (status != null) {
-            predicates.add(cb.like(operation.get("status"), "%" + status + "%"));
+        if (dueDate != null ) {
+            predicates.add(cb.equal(operation.get("dueDate") ,  dueDate ));
         }
 
+        if (status != null && !status.isEmpty()) {
+            predicates.add(cb.like(operation.get("status"), "%" + status + "%"));
+        }
 
         cq.where(predicates.toArray(new Predicate[0]));
 
